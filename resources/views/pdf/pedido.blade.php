@@ -260,7 +260,7 @@
         <table class="footer-table">
             <tr>
                 <td width="85%">
-                    <div class="footer-brand">{{ $empresa->nome ?? 'Madeira Legal' }}</div>
+                    <div class="footer-brand">{{ $empresa->nome ?? 'Rastro' }}</div>
                     <div class="footer-info">
                         CNPJ: {{ $empresa->cnpj ?? '-' }} 
                         @if($empresa->inscricao_estadual)| IE: {{ $empresa->inscricao_estadual }}@endif
@@ -288,7 +288,7 @@
                     @endif
                 </td>
                 <td class="company-cell">
-                    <div class="company-name">{{ $empresa->nome ?? 'MADEIRA LEGAL' }}</div>
+                    <div class="company-name">{{ $empresa->nome ?? 'RASTRO' }}</div>
                     <div class="company-info">
                         @if($empresa->cnpj)CNPJ: {{ $empresa->cnpj }} @if($empresa->inscricao_estadual)| IE: {{ $empresa->inscricao_estadual }}@endif<br>@endif
                         @if($empresa->endereco){{ $empresa->endereco }}@endif
@@ -399,7 +399,7 @@
     <!-- Signatures -->
     <table class="signatures-table">
         <tr>
-            <td>{{ $empresa->nome ?? 'Madeira Legal' }}</td>
+            <td>{{ $empresa->nome ?? 'Rastro' }}</td>
             <td class="spacer"></td>
             <td>{{ $pedido->cliente->nome ?? 'Cliente' }}</td>
         </tr>

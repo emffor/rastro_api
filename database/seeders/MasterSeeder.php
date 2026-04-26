@@ -18,7 +18,7 @@ class MasterSeeder extends Seeder
 
         User::create([
             'name' => 'Master Admin',
-            'email' => 'master@madeiralegal.com',
+            'email' => 'master@rastro.com',
             'password' => Hash::make('master123'),
             'is_master' => true,
             'is_admin' => false,

@@ -29,13 +29,13 @@ return [
     'connections' => [
 
         'main' => [
-            'salt' => env('HASHIDS_SALT', env('APP_KEY', 'madeiralegal')),
+            'salt' => env('HASHIDS_SALT', env('APP_KEY', 'rastro')),
             'length' => (int) env('HASHIDS_LENGTH', 12),
             // 'alphabet' => 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
         ],
 
         'alternative' => [
-            'salt' => env('HASHIDS_ALT_SALT', env('APP_KEY', 'madeiralegal-alt')),
+            'salt' => env('HASHIDS_ALT_SALT', env('APP_KEY', 'rastro-alt')),
             'length' => (int) env('HASHIDS_ALT_LENGTH', 12),
             // 'alphabet' => 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
         ],

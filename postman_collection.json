@@ -1,7 +1,7 @@
 {
     "info": {
-        "name": "MadeiraLegal API",
-        "description": "API para controle de estoque de madeira legal",
+        "name": "Rastro API",
+        "description": "API para controle de estoque de rastro",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
     "variable": [
@@ -93,7 +93,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"email\": \"master@madeiralegal.com\",\n    \"password\": \"master123\"\n}"
+                            "raw": "{\n    \"email\": \"master@rastro.com\",\n    \"password\": \"master123\"\n}"
                         },
                         "url": {
                             "raw": "{{BASE_URL_MADEIRA}}/auth/login",

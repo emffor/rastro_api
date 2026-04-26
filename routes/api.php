@@ -21,7 +21,7 @@ use App\Http\Controllers\ProdutoDimensionadoController;
 use App\Http\Controllers\TipoSerragemController;
 
 Route::get('/', function () {
-    return response()->json(['API' => 'MadeiraLegal API — Controle Operacional DOF', 'version' => '2.0.0']);
+    return response()->json(['API' => 'Rastro API — Controle Operacional DOF', 'version' => '2.0.0']);
 });
 
 Route::prefix('auth')->group(function () {

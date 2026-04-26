@@ -3,7 +3,7 @@ export
 
 DB_HOST ?= localhost
 DB_PORT ?= 5432
-DB_DATABASE ?= madeiralegal
+DB_DATABASE ?= rastro
 DB_USERNAME ?= postgres
 DB_PASSWORD ?= password
 
@@ -94,5 +94,5 @@ setup-produtos:
 
 	@echo "Produtos atualizados!"
 	@echo "Gerando DOFs para a primeira empresa..."
-	@docker exec madeiralegal-app php artisan dof:gerar $$($(PSQL) -t -A -c "SELECT id FROM public.empresas ORDER BY created_at ASC LIMIT 1;")
+	@docker exec rastro-app php artisan dof:gerar $$($(PSQL) -t -A -c "SELECT id FROM public.empresas ORDER BY created_at ASC LIMIT 1;")
 	@echo "DOFs gerados com sucesso!"
