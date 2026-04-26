@@ -25,7 +25,7 @@ class ExportarRelatorioMovimentacoesPdfAction
             'filtro_tipo' => (string) ($filtros['tipo'] ?? ''),
             'empresa_nome' => $empresaNome !== '' ? $empresaNome : '—',
             'data_geracao' => now()->format('d/m/Y H:i'),
-            'logo_path' => public_path('relatorios/logo-2-pb.png'),
+            'logo_path' => public_path('relatorios/logo.png'),
         ])->setPaper('a4', 'landscape');
 
         $nomeArquivo = RelatorioNomeArquivo::montar('relatorio-movimentacoes', $empresaNome, 'pdf');
