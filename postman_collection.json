@@ -1,0 +1,1362 @@
+{
+    "info": {
+        "name": "MadeiraLegal API",
+        "description": "API para controle de estoque de madeira legal",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "BASE_URL_MADEIRA",
+            "value": "http://localhost:8080/api"
+        },
+        {
+            "key": "TOKEN",
+            "value": ""
+        },
+        {
+            "key": "EMPRESA_ID",
+            "value": ""
+        },
+        {
+            "key": "CARGO_ID",
+            "value": ""
+        },
+        {
+            "key": "USUARIO_ID",
+            "value": ""
+        },
+        {
+            "key": "ESPECIE_ID",
+            "value": ""
+        },
+        {
+            "key": "DOF_ID",
+            "value": ""
+        },
+        {
+            "key": "DOF_ITEM_ID",
+            "value": ""
+        },
+        {
+            "key": "PRODUTO_ID",
+            "value": ""
+        },
+        {
+            "key": "CLIENTE_ID",
+            "value": ""
+        },
+        {
+            "key": "PEDIDO_ID",
+            "value": ""
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "token",
+                "value": "{{TOKEN}}",
+                "type": "string"
+            }
+        ]
+    },
+    "item": [
+        {
+            "name": "Auth",
+            "item": [
+                {
+                    "name": "Login",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "if (jsonData.dados && jsonData.dados.token) {",
+                                    "    pm.collectionVariables.set('TOKEN', jsonData.dados.token);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"master@madeiralegal.com\",\n    \"password\": \"master123\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/auth/login",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["auth", "login"]
+                        }
+                    }
+                },
+                {
+                    "name": "Login (Admin Empresa)",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "if (jsonData.dados && jsonData.dados.token) {",
+                                    "    pm.collectionVariables.set('TOKEN', jsonData.dados.token);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"admin2@madeireiraflorestaverde.com\",\n    \"password\": \"123123\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/auth/login",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["auth", "login"]
+                        }
+                    }
+                },
+                {
+                    "name": "Login (Usuário Administrador)",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "if (jsonData.dados && jsonData.dados.token) {",
+                                    "    pm.collectionVariables.set('TOKEN', jsonData.dados.token);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"fernanda.lima3@teste.com\",\n    \"password\": \"123456\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/auth/login",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["auth", "login"]
+                        }
+                    }
+                },
+                {
+                    "name": "Login (Usuário não Administrador)",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "if (jsonData.dados && jsonData.dados.token) {",
+                                    "    pm.collectionVariables.set('TOKEN', jsonData.dados.token);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"ricardo.alves0@teste.com\",\n    \"password\": \"123456\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/auth/login",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["auth", "login"]
+                        }
+                    }
+                },
+                {
+                    "name": "Me (Dados do Usuário)",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/auth/me",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["auth", "me"]
+                        }
+                    }
+                },
+                {
+                    "name": "Logout",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/auth/logout",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["auth", "logout"]
+                        }
+                    }
+                },
+                {
+                    "name": "Trocar Empresa (MASTER)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"empresa_id\": \"{{EMPRESA_ID}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/auth/trocar-empresa",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["auth", "trocar-empresa"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Admin Master",
+            "item": [
+                {
+                    "name": "Dashboard",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/admin/dashboard",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["admin", "dashboard"]
+                        }
+                    }
+                },
+                {
+                    "name": "Listar Todas Empresas",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/admin/empresas",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["admin", "empresas"]
+                        }
+                    }
+                },
+                {
+                    "name": "Detalhe Empresa",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/admin/empresas/{{EMPRESA_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["admin", "empresas", "{{EMPRESA_ID}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Ativar/Desativar Empresa",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/admin/empresas/{{EMPRESA_ID}}/toggle",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": [
+                                "admin",
+                                "empresas",
+                                "{{EMPRESA_ID}}",
+                                "toggle"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Forçar Logout Empresa",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/admin/empresas/{{EMPRESA_ID}}/forcar-logout",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": [
+                                "admin",
+                                "empresas",
+                                "{{EMPRESA_ID}}",
+                                "forcar-logout"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Usuários da Empresa",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/admin/empresas/{{EMPRESA_ID}}/usuarios",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": [
+                                "admin",
+                                "empresas",
+                                "{{EMPRESA_ID}}",
+                                "usuarios"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Ativar/Desativar Usuário",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/admin/usuarios/{{USUARIO_ID}}/toggle",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": [
+                                "admin",
+                                "usuarios",
+                                "{{USUARIO_ID}}",
+                                "toggle"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Forçar Logout Usuário",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/admin/usuarios/{{USUARIO_ID}}/forcar-logout",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": [
+                                "admin",
+                                "usuarios",
+                                "{{USUARIO_ID}}",
+                                "forcar-logout"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Listar Permissões",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/admin/permissoes",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["admin", "permissoes"]
+                        }
+                    }
+                },
+                {
+                    "name": "Listar Empresas",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/empresas",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["empresas"]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar Empresa + Admin",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "if (jsonData.dados && jsonData.dados.empresa) {",
+                                    "    pm.collectionVariables.set('EMPRESA_ID', jsonData.dados.empresa.id);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"empresa_nome\": \"Madeireira Teste\",\n    \"empresa_cnpj\": \"12.345.678/0001-99\",\n    \"tipo_empresa\": \"MISTO\",\n    \"admin_nome\": \"Admin Teste\",\n    \"admin_email\": \"admin@teste.com\",\n    \"admin_senha\": \"123123\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/empresas",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["empresas"]
+                        }
+                    }
+                },
+                {
+                    "name": "Exibir Empresa",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/empresas/{{EMPRESA_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["empresas", "{{EMPRESA_ID}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Atualizar Empresa",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nome\": \"Madeireira Atualizada\",\n    \"email\": \"contato@madeireira.com\",\n    \"telefone\": \"(11) 99999-9999\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/empresas/{{EMPRESA_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["empresas", "{{EMPRESA_ID}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Excluir Empresa",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/empresas/{{EMPRESA_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["empresas", "{{EMPRESA_ID}}"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Cargos",
+            "item": [
+                {
+                    "name": "Listar Cargos",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/cargos",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["cargos"]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar Cargo",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "if (jsonData.dados && jsonData.dados.id) {",
+                                    "    pm.collectionVariables.set('CARGO_ID', jsonData.dados.id);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nome\": \"Vendedor\",\n    \"descricao\": \"Vendedor de madeira\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/cargos",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["cargos"]
+                        }
+                    }
+                },
+                {
+                    "name": "Exibir Cargo",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/cargos/{{CARGO_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["cargos", "{{CARGO_ID}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Atualizar Cargo",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nome\": \"Vendedor Sênior\",\n    \"descricao\": \"Vendedor experiente\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/cargos/{{CARGO_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["cargos", "{{CARGO_ID}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Sincronizar Permissões",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"permissoes\": []\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/cargos/{{CARGO_ID}}/permissoes",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["cargos", "{{CARGO_ID}}", "permissoes"]
+                        }
+                    }
+                },
+                {
+                    "name": "Excluir Cargo",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/cargos/{{CARGO_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["cargos", "{{CARGO_ID}}"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Usuários",
+            "item": [
+                {
+                    "name": "Listar Usuários",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/usuarios",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["usuarios"]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar Usuário",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "if (jsonData.dados && jsonData.dados.id) {",
+                                    "    pm.collectionVariables.set('USUARIO_ID', jsonData.dados.id);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"João Vendedor\",\n    \"email\": \"joao@teste.com\",\n    \"password\": \"123456\",\n    \"cargo_id\": \"{{CARGO_ID}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/usuarios",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["usuarios"]
+                        }
+                    }
+                },
+                {
+                    "name": "Exibir Usuário",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/usuarios/{{USUARIO_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["usuarios", "{{USUARIO_ID}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Atualizar Usuário",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"João da Silva\",\n    \"ativo\": true\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/usuarios/{{USUARIO_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["usuarios", "{{USUARIO_ID}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Excluir Usuário",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/usuarios/{{USUARIO_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["usuarios", "{{USUARIO_ID}}"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Estoque",
+            "item": [
+                {
+                    "name": "Resumo do Pátio",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/estoque/resumo",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["estoque", "resumo"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Espécies",
+            "item": [
+                {
+                    "name": "Listar Espécies",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/especies",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["especies"]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar Espécie",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "if (jsonData.dados && jsonData.dados.id) {",
+                                    "    pm.collectionVariables.set('ESPECIE_ID', jsonData.dados.id);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nome_cientifico\": \"Handroanthus impetiginosus\",\n    \"nome_popular\": \"Ipê Roxo\",\n    \"codigo_ibama\": \"HANIMP\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/especies",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["especies"]
+                        }
+                    }
+                },
+                {
+                    "name": "Exibir Espécie",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/especies/{{ESPECIE_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["especies", "{{ESPECIE_ID}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Atualizar Espécie",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nome_popular\": \"Ipê Rosa\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/especies/{{ESPECIE_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["especies", "{{ESPECIE_ID}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Excluir Espécie",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/especies/{{ESPECIE_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["especies", "{{ESPECIE_ID}}"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "DOFs",
+            "item": [
+                {
+                    "name": "Listar DOFs",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/dofs",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["dofs"]
+                        }
+                    }
+                },
+                {
+                    "name": "Listar DOFs Ativos",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/dofs/ativos",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["dofs", "ativos"]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar DOF com Itens",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "if (jsonData.dados && jsonData.dados.id) {",
+                                    "    pm.collectionVariables.set('DOF_ID', jsonData.dados.id);",
+                                    "}",
+                                    "if (jsonData.dados && jsonData.dados.itens && jsonData.dados.itens[0]) {",
+                                    "    pm.collectionVariables.set('DOF_ITEM_ID', jsonData.dados.itens[0].id);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"numero\": \"DOF-2026-0002\",\n    \"serie\": \"A\",\n    \"valido_ate\": \"2027-12-31\",\n    \"itens\": [\n        {\n            \"especie_id\": \"{{ESPECIE_ID}}\",\n            \"tipo\": \"VIGA\",\n            \"quantidade\": 50\n        }\n    ]\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/dofs",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["dofs"]
+                        }
+                    }
+                },
+                {
+                    "name": "Exibir DOF",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/dofs/{{DOF_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["dofs", "{{DOF_ID}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Atualizar DOF",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"status\": \"ATIVO\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/dofs/{{DOF_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["dofs", "{{DOF_ID}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Excluir DOF",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/dofs/{{DOF_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["dofs", "{{DOF_ID}}"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Produtos",
+            "item": [
+                {
+                    "name": "Listar Produtos",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/produtos",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["produtos"]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar Produto Florestal",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "if (jsonData.dados && jsonData.dados.id) {",
+                                    "    pm.collectionVariables.set('PRODUTO_ID', jsonData.dados.id);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nome\": \"LINHA IPÊ 5.0 X 12 X 5.00\",\n    \"descricao\": \"Linha de Ipê 5x12cm, 5 metros\",\n    \"unidade\": \"UND\",\n    \"tipo\": \"FLORESTAL\",\n    \"largura\": 5.0,\n    \"espessura\": 12.0,\n    \"comprimento\": 5.00,\n    \"estoque_quantidade\": 100,\n    \"dof_itens\": [\n        {\n            \"dof_item_id\": \"{{DOF_ITEM_ID}}\",\n            \"volume_alocado\": 3.0\n        }\n    ]\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/produtos",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["produtos"]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar Produto Geral",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nome\": \"Cola para Madeira\",\n    \"descricao\": \"Cola PVA para madeira\",\n    \"unidade\": \"UND\",\n    \"tipo\": \"GERAL\",\n    \"estoque_quantidade\": 50\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/produtos",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["produtos"]
+                        }
+                    }
+                },
+                {
+                    "name": "Exibir Produto",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/produtos/{{PRODUTO_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["produtos", "{{PRODUTO_ID}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Atualizar Produto",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nome\": \"LINHA IPÊ PREMIUM 5.0 X 12 X 5.00\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/produtos/{{PRODUTO_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["produtos", "{{PRODUTO_ID}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Excluir Produto",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/produtos/{{PRODUTO_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["produtos", "{{PRODUTO_ID}}"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Movimentações de Estoque",
+            "item": [
+                {
+                    "name": "Listar Movimentações",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/movimentacoes-estoque",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["movimentacoes-estoque"]
+                        }
+                    }
+                },
+                {
+                    "name": "Registrar Entrada",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"produto_id\": \"{{PRODUTO_ID}}\",\n    \"tipo\": \"ENTRADA\",\n    \"quantidade\": 50,\n    \"data_movimentacao\": \"2026-01-08\",\n    \"observacao\": \"Entrada de romaneio\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/movimentacoes-estoque",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["movimentacoes-estoque"]
+                        }
+                    }
+                },
+                {
+                    "name": "Registrar Saída",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"produto_id\": \"{{PRODUTO_ID}}\",\n    \"tipo\": \"SAIDA\",\n    \"quantidade\": 10,\n    \"data_movimentacao\": \"2026-01-08\",\n    \"observacao\": \"Venda para cliente\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/movimentacoes-estoque",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["movimentacoes-estoque"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Clientes",
+            "item": [
+                {
+                    "name": "Listar Clientes",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/clientes",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["clientes"]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar Cliente",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "if (jsonData.dados && jsonData.dados.id) {",
+                                    "    pm.collectionVariables.set('CLIENTE_ID', jsonData.dados.id);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nome\": \"Cliente Exemplo\",\n    \"tipo\": \"PF\",\n    \"documento\": \"123.456.789-00\",\n    \"email\": \"cliente@exemplo.com\",\n    \"telefone\": \"(11) 99999-9999\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/clientes",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["clientes"]
+                        }
+                    }
+                },
+                {
+                    "name": "Ver Cliente",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/clientes/{{CLIENTE_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["clientes", "{{CLIENTE_ID}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Atualizar Cliente",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nome\": \"Cliente Atualizado\",\n    \"telefone\": \"(11) 88888-8888\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/clientes/{{CLIENTE_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["clientes", "{{CLIENTE_ID}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Excluir Cliente",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/clientes/{{CLIENTE_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["clientes", "{{CLIENTE_ID}}"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Pedidos",
+            "item": [
+                {
+                    "name": "Listar Pedidos",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/pedidos",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["pedidos"]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar Pedido",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "if (jsonData.dados && jsonData.dados.id) {",
+                                    "    pm.collectionVariables.set('PEDIDO_ID', jsonData.dados.id);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"cliente_id\": \"{{CLIENTE_ID}}\",\n    \"vendedor_id\": \"{{USUARIO_ID}}\",\n    \"itens\": [\n        {\n            \"produto_id\": \"{{PRODUTO_ID}}\",\n            \"quantidade\": 5\n        }\n    ]\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/pedidos",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["pedidos"]
+                        }
+                    }
+                },
+                {
+                    "name": "Ver Pedido",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/pedidos/{{PEDIDO_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["pedidos", "{{PEDIDO_ID}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Resumo DOF (para impressão)",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/pedidos/{{PEDIDO_ID}}/resumo-dof",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["pedidos", "{{PEDIDO_ID}}", "resumo-dof"]
+                        }
+                    }
+                },
+                {
+                    "name": "Resumo DOF (PDF)",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/pedidos/{{PEDIDO_ID}}/resumo-dof?formato=pdf",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["pedidos", "{{PEDIDO_ID}}", "resumo-dof"],
+                            "query": [
+                                {
+                                    "key": "formato",
+                                    "value": "pdf"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Adicionar Item",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"produto_id\": \"{{PRODUTO_ID}}\",\n    \"quantidade\": 3\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/pedidos/{{PEDIDO_ID}}/itens",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["pedidos", "{{PEDIDO_ID}}", "itens"]
+                        }
+                    }
+                },
+                {
+                    "name": "Enviar para Aprovação",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/pedidos/{{PEDIDO_ID}}/enviar",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["pedidos", "{{PEDIDO_ID}}", "enviar"]
+                        }
+                    }
+                },
+                {
+                    "name": "Finalizar Pedido",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/pedidos/{{PEDIDO_ID}}/finalizar",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["pedidos", "{{PEDIDO_ID}}", "finalizar"]
+                        }
+                    }
+                },
+                {
+                    "name": "Cancelar Pedido",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"motivo\": \"Cliente desistiu da compra\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/pedidos/{{PEDIDO_ID}}/cancelar",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["pedidos", "{{PEDIDO_ID}}", "cancelar"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Comissões",
+            "item": [
+                {
+                    "name": "Listar Comissões (Período)",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/comissoes?data_inicio=2026-01-01&data_fim=2026-12-31",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["comissoes"],
+                            "query": [
+                                { "key": "data_inicio", "value": "2026-01-01" },
+                                { "key": "data_fim", "value": "2026-12-31" }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Comissões por Vendedor",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL_MADEIRA}}/comissoes/vendedor/{{USUARIO_ID}}",
+                            "host": ["{{BASE_URL_MADEIRA}}"],
+                            "path": ["comissoes", "vendedor", "{{USUARIO_ID}}"]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

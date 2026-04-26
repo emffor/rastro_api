@@ -1,0 +1,86 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: rastro-app
+        container_name: rastro-app
+        restart: unless-stopped
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+        networks:
+            - rastro-network
+        depends_on:
+            - db
+            - redis
+        environment:
+            XDEBUG_MODE: debug,develop,coverage
+            XDEBUG_CONFIG: client_host=host.docker.internal client_port=9003
+                start_with_request=yes
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+
+    nginx:
+        image: nginx:alpine
+        container_name: rastro-nginx
+        restart: unless-stopped
+        ports:
+            - "8080:8080"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+        networks:
+            - rastro-network
+        depends_on:
+            - app
+
+    db:
+        image: postgres:16-alpine
+        container_name: rastro-db
+        restart: unless-stopped
+        environment:
+            POSTGRES_DB: ${DB_DATABASE:-rastro}
+            POSTGRES_USER: ${DB_USERNAME:-postgres}
+            POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+
+        ports:
+            - "5434:5432"
+        volumes:
+            - rastro-db-data:/var/lib/postgresql/data
+        networks:
+            - rastro-network
+
+    redis:
+        image: redis:7-alpine
+        container_name: rastro-redis
+        restart: unless-stopped
+        ports:
+            - "6380:6379"
+        volumes:
+            - rastro-redis-data:/data
+        networks:
+            - rastro-network
+    # Queue worker - descomente quando usar jobs assíncronos
+    # queue:
+    #     image: rastro-app
+    #     container_name: rastro-queue
+    #     restart: unless-stopped
+    #     working_dir: /var/www
+    #     command: php artisan queue:work
+    #     volumes:
+    #         - ./:/var/www
+    #     networks:
+    #         - rastro-network
+    #     depends_on:
+    #         - app
+    #         - redis
+    #         - db
+
+networks:
+    rastro-network:
+        driver: bridge
+
+volumes:
+    rastro-db-data:
+    rastro-redis-data:
