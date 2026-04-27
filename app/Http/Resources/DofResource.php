@@ -34,6 +34,7 @@ class DofResource extends JsonResource
             'data_emissao' => optional($this->data_emissao)->format('Y-m-d H:i:s'),
             'volume_total' => $this->volume_total,
             'volume_saldo_m3' => $this->volume_saldo_m3,
+            'unidade_medida' => $this->unidade_medida ?? 'm³',
             'origem' => $this->origem,
             'destino' => $this->destino,
             'nota_fiscal' => $this->nota_fiscal,

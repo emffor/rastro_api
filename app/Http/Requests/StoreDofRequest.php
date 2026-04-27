@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use App\Helpers\AuthHelper;
+use App\Models\Dof;
 
 class StoreDofRequest extends FormRequest
 {
@@ -91,6 +92,7 @@ class StoreDofRequest extends FormRequest
             'itens.*.especie_id' => 'required_with:itens|uuid|exists:especies,id',
             'itens.*.tipo' => 'nullable|string',
             'itens.*.quantidade_autorizada' => 'required_with:itens|numeric|min:0.0001',
+            'unidade_medida' => ['nullable', 'string', Rule::in(Dof::unidadesValidas())],
         ];
     }
 }

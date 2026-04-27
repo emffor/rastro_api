@@ -169,7 +169,7 @@ class RelatorioMovimentacoesFormatter
         $consumoProdutos = $movimentacao->saidaOperacaoItem?->consumoProdutos;
 
         if (!$consumoProdutos || $consumoProdutos->isEmpty()) {
-            return $volumeSemProduto > 0 ? 'Sem produto: ' . number_format($volumeSemProduto, 4, ',', '.') . ' m³' : '—';
+            return $volumeSemProduto > 0 ? 'Sem produto: ' . number_format($volumeSemProduto, 4, ',', '.') . ' ' . ($movimentacao->dof?->unidade_medida ?? 'm³') : '—';
         }
 
         $partes = $consumoProdutos
@@ -181,7 +181,7 @@ class RelatorioMovimentacoesFormatter
             ->all();
 
         if ($volumeSemProduto > 0) {
-            $partes[] = 'Sem produto: ' . number_format($volumeSemProduto, 4, ',', '.') . ' m³';
+            $partes[] = 'Sem produto: ' . number_format($volumeSemProduto, 4, ',', '.') . ' ' . ($movimentacao->dof?->unidade_medida ?? 'm³');
         }
 
         return count($partes) > 0 ? implode(' | ', $partes) : '—';

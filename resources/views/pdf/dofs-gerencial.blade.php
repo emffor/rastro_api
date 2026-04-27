@@ -189,6 +189,7 @@
                     $saldo = (float) $dof->volume_saldo_m3;
                     $alocado = max(0, $total - $saldo);
                     $percentual = $total > 0 ? ($alocado / $total) * 100 : 0;
+                    $unidade = $dof->unidade_medida ?? 'm³';
                     $statusLabel = match ($dof->status) {
                         'ATIVO' => 'NÃO ALOCADO',
                         'PARCIAL' => 'PARCIALMENTE ALOCADO',

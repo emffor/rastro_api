@@ -20,10 +20,23 @@ class Dof extends Model
     public const STATUS_PARCIAL = 'PARCIAL';
     public const STATUS_ENCERRADO = 'ENCERRADO';
 
+    public const UNIDADE_M3 = 'm³';
+    public const UNIDADE_ST = 'st';
+
+    private const UNIDADES_VALIDAS = [
+        self::UNIDADE_M3,
+        self::UNIDADE_ST,
+    ];
+
+    public static function unidadesValidas(): array
+    {
+        return self::UNIDADES_VALIDAS;
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['numero', 'serie', 'status', 'volume_total', 'volume_saldo_m3', 'valido_ate', 'nota_fiscal'])
+            ->logOnly(['numero', 'serie', 'status', 'volume_total', 'volume_saldo_m3', 'unidade_medida', 'valido_ate', 'nota_fiscal'])
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs();
     }
@@ -37,6 +50,7 @@ class Dof extends Model
         'data_emissao',
         'volume_total',
         'volume_saldo_m3',
+        'unidade_medida',
         'origem',
         'destino',
         'nota_fiscal',

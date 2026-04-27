@@ -456,7 +456,7 @@ class SaidaService
             $nomeEspecie = $especie?->nome_formatado ?: ($especie?->nome_popular ?: $especie?->nome_cientifico ?: 'Espécie informada');
 
             throw new \DomainException(
-                "Saldo insuficiente para {$nomeEspecie}. Disponível: " . number_format($volumeDisponivel, 4, '.', '') . " m³, solicitado: " . number_format($volumeSolicitado, 4, '.', '') . " m³."
+                "Saldo insuficiente para {$nomeEspecie}. Disponível: " . number_format($volumeDisponivel, 4, '.', '') . ", solicitado: " . number_format($volumeSolicitado, 4, '.', '') . "."
             );
         }
 

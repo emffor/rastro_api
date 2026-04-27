@@ -26,6 +26,7 @@ class MovimentacaoResource extends JsonResource
             'empresa_id' => AuthHelper::encryptId($this->empresa_id),
             'tipo' => $this->tipo,
             'volume_m3' => $this->volume_m3,
+            'unidade_medida' => $this->whenLoaded('dof', fn () => $this->dof?->unidade_medida ?? 'm³', 'm³'),
             'observacao' => $this->observacao,
             'created_at' => optional($this->created_at)->format('Y-m-d H:i:s'),
             'updated_at' => optional($this->updated_at)->format('Y-m-d H:i:s'),

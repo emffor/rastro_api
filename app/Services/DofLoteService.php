@@ -34,16 +34,18 @@ class DofLoteService
                 }
 
                 if ((float) $dofItem->quantidade_disponivel < $volumeM3) {
+                    $unidade = $dof->unidade_medida ?? 'm³';
                     throw new \DomainException(
-                        "Saldo insuficiente no item do DOF. Disponível: {$dofItem->quantidade_disponivel} m³, solicitado: {$volumeM3} m³."
+                        "Saldo insuficiente no item do DOF. Disponível: {$dofItem->quantidade_disponivel} {$unidade}, solicitado: {$volumeM3} {$unidade}."
                     );
                 }
 
                 $this->validarLoteDestinoDisponivel($lote);
 
                 if ($lote->capacidade_volume && ((float) $lote->volume_ocupado + $volumeM3) > (float) $lote->capacidade_volume) {
+                    $unidade = $dof->unidade_medida ?? 'm³';
                     throw new \DomainException(
-                        "Capacidade do lote excedida. Disponível: " . ((float) $lote->capacidade_volume - (float) $lote->volume_ocupado) . " m³."
+                        "Capacidade do lote excedida. Disponível: " . ((float) $lote->capacidade_volume - (float) $lote->volume_ocupado) . " {$unidade}."
                     );
                 }
 
@@ -174,14 +176,16 @@ class DofLoteService
                 }
 
                 if ((float) $dofItem->quantidade_disponivel < $volumeTotal) {
+                    $unidade = $dof->unidade_medida ?? 'm³';
                     throw new \DomainException(
-                        "Saldo insuficiente no item do DOF. Disponível: {$dofItem->quantidade_disponivel} m³, solicitado: {$volumeTotal} m³."
+                        "Saldo insuficiente no item do DOF. Disponível: {$dofItem->quantidade_disponivel} {$unidade}, solicitado: {$volumeTotal} {$unidade}."
                     );
                 }
 
                 if ($lote->capacidade_volume && ((float) $lote->volume_ocupado + $volumeTotal) > (float) $lote->capacidade_volume) {
+                    $unidade = $dof->unidade_medida ?? 'm³';
                     throw new \DomainException(
-                        "Capacidade do lote excedida. Disponível: " . ((float) $lote->capacidade_volume - (float) $lote->volume_ocupado) . " m³."
+                        "Capacidade do lote excedida. Disponível: " . ((float) $lote->capacidade_volume - (float) $lote->volume_ocupado) . " {$unidade}."
                     );
                 }
 
@@ -350,7 +354,7 @@ class DofLoteService
                         volumeM3: $volumeTransferido,
                         loteOrigemId: $loteOrigemId,
                         loteDestinoId: $loteDestinoId,
-                        observacao: $observacao ?? "Transferência por peças de {$volumeTransferido} m³ do lote {$loteOrigem->nome} para {$loteDestino->nome}",
+                        observacao: $observacao ?? "Transferência por peças de {$volumeTransferido} " . ($dof->unidade_medida ?? 'm³') . " do lote {$loteOrigem->nome} para {$loteDestino->nome}",
                         dofItemId: $dofItemId,
                         resumoProdutos: $this->mapearResumoProdutosMovimentacao($linhasTransferidas),
                     );
@@ -374,8 +378,10 @@ class DofLoteService
                     throw new \DomainException('Para alocação manual, informe um volume_m3 válido.');
                 }
                 if ((float) $dofLoteOrigem->volume_m3 < $volumeM3) {
+                    $dof = Dof::find($dofLoteOrigem->dof_id);
+                    $unidade = $dof->unidade_medida ?? 'm³';
                     throw new \DomainException(
-                        "Volume insuficiente na alocação. Disponível: {$dofLoteOrigem->volume_m3} m³, solicitado: {$volumeM3} m³."
+                        "Volume insuficiente na alocação. Disponível: {$dofLoteOrigem->volume_m3} {$unidade}, solicitado: {$volumeM3} {$unidade}."
                     );
                 }
 
@@ -420,7 +426,7 @@ class DofLoteService
                     volumeM3: $volumeM3,
                     loteOrigemId: $loteOrigemId,
                     loteDestinoId: $loteDestinoId,
-                    observacao: $observacao ?? "Transferência de {$volumeM3} m³ do lote {$loteOrigem->nome} para {$loteDestino->nome}",
+                    observacao: $observacao ?? "Transferência de {$volumeM3} " . ($dof->unidade_medida ?? 'm³') . " do lote {$loteOrigem->nome} para {$loteDestino->nome}",
                     dofItemId: $dofItemId,
                 );
 
@@ -502,8 +508,10 @@ class DofLoteService
                         throw new \DomainException('Para baixa manual, informe um volume_m3 válido.');
                     }
                     if ((float) $dofLote->volume_m3 < $volumeM3) {
+                        $dof = Dof::find($dofLote->dof_id);
+                        $unidade = $dof->unidade_medida ?? 'm³';
                         throw new \DomainException(
-                            "Volume insuficiente para baixa. Disponível: {$dofLote->volume_m3} m³, solicitado: {$volumeM3} m³."
+                            "Volume insuficiente para baixa. Disponível: {$dofLote->volume_m3} {$unidade}, solicitado: {$volumeM3} {$unidade}."
                         );
                     }
 
@@ -543,7 +551,7 @@ class DofLoteService
                     tipo: Movimentacao::TIPO_BAIXA,
                     volumeM3: $volumeBaixado,
                     loteOrigemId: $loteId,
-                    observacao: $observacao ?? "Baixa de {$volumeBaixado} m³ do lote {$lote->nome}",
+                    observacao: $observacao ?? "Baixa de {$volumeBaixado} " . ($dof->unidade_medida ?? 'm³') . " do lote {$lote->nome}",
                     dofItemId: $dofItemId,
                     resumoProdutos: ($modo === DofAlocacao::MODO_PECAS && !empty($linhasBaixadas))
                         ? $this->mapearResumoProdutosMovimentacao($linhasBaixadas)
@@ -590,12 +598,15 @@ class DofLoteService
                 $lote = $this->buscarLoteDaEmpresa($loteId);
                 $lote->recalcularVolumeOcupado();
 
+                $dof = Dof::findOrFail($dofId);
+                $unidade = $dof->unidade_medida ?? 'm³';
+
                 $this->movimentacaoService->registrar(
                     dofId: $dofId,
                     tipo: Movimentacao::TIPO_AJUSTE,
                     volumeM3: $volumeM3,
                     loteOrigemId: $loteId,
-                    observacao: "Remoção de alocação de {$volumeM3} m³ do lote {$lote->nome}",
+                    observacao: "Remoção de alocação de {$volumeM3} {$unidade} do lote {$lote->nome}",
                     dofItemId: $dofItemId ? (string) $dofItemId : null,
                 );
             });
@@ -907,7 +918,7 @@ class DofLoteService
     {
         if ($loteDestino->capacidade_volume && ((float) $loteDestino->volume_ocupado + $volumeM3) > (float) $loteDestino->capacidade_volume) {
             throw new \DomainException(
-                "Capacidade do lote {$escopoMensagem} excedida. Disponível: " . ((float) $loteDestino->capacidade_volume - (float) $loteDestino->volume_ocupado) . " m³."
+                "Capacidade do lote {$escopoMensagem} excedida. Disponível: " . ((float) $loteDestino->capacidade_volume - (float) $loteDestino->volume_ocupado) . "."
             );
         }
     }

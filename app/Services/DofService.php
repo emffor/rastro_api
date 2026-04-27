@@ -151,6 +151,7 @@ class DofService
                     'data_emissao' => $dados['data_emissao'] ?? now(),
                     'volume_total' => $volumeTotal,
                     'volume_saldo_m3' => $volumeTotal,
+                    'unidade_medida' => $dados['unidade_medida'] ?? Dof::UNIDADE_M3,
                     'origem' => $dados['origem'] ?? null,
                     'destino' => $dados['destino'] ?? null,
                     'nota_fiscal' => $dados['nota_fiscal'] ?? null,
@@ -198,7 +199,7 @@ class DofService
                     throw new \DomainException('Volume total do DOF deve ser maior que zero.');
                 }
 
-                $dof->update([
+                $dadosUpdate = [
                     'numero' => $numeroSerie,
                     'serie' => $numeroSerie,
                     'valido_ate' => $dados['valido_ate'] ?? $dof->valido_ate,
@@ -207,7 +208,17 @@ class DofService
                     'origem' => $dados['origem'] ?? $dof->origem,
                     'destino' => $dados['destino'] ?? $dof->destino,
                     'nota_fiscal' => $dados['nota_fiscal'] ?? $dof->nota_fiscal,
-                ]);
+                ];
+
+                if (array_key_exists('unidade_medida', $dados)) {
+                    $novaUnidade = $dados['unidade_medida'] ?? Dof::UNIDADE_M3;
+                    if ($novaUnidade !== $dof->unidade_medida && $dof->dofLotes()->exists()) {
+                        throw new \DomainException('Não é possível alterar a unidade de medida de um DOF que já possui alocações em lotes.');
+                    }
+                    $dadosUpdate['unidade_medida'] = $novaUnidade;
+                }
+
+                $dof->update($dadosUpdate);
 
                 if (!empty($dados['itens'])) {
                     if ($dof->dofLotes()->exists()) {

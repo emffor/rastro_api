@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use App\Helpers\AuthHelper;
+use App\Models\Dof;
 
 class UpdateDofRequest extends FormRequest
 {
@@ -98,6 +99,7 @@ class UpdateDofRequest extends FormRequest
             'itens.*.tipo' => 'nullable|string',
             'itens.*.quantidade_autorizada' => 'required_with:itens|numeric|min:0.0001',
             'itens.*.quantidade_disponivel' => 'nullable|numeric|min:0',
+            'unidade_medida' => ['nullable', 'string', Rule::in(Dof::unidadesValidas())],
         ];
     }
 }
