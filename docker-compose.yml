@@ -12,7 +12,6 @@ services:
         networks:
             - rastro-network
         depends_on:
-            - db
             - redis
         environment:
             XDEBUG_MODE: debug,develop,coverage
@@ -36,13 +35,14 @@ services:
             - app
 
     db:
+        profiles: [legacy-postgres]
         image: postgres:16-alpine
         container_name: rastro-db
         restart: unless-stopped
         environment:
             POSTGRES_DB: ${DB_DATABASE:-rastro}
-            POSTGRES_USER: ${DB_USERNAME:-postgres}
-            POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: "${LEGACY_POSTGRES_PASSWORD:?Defina LEGACY_POSTGRES_PASSWORD na .env}"
 
         ports:
             - "5434:5432"

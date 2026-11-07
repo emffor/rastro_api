@@ -165,3 +165,8 @@ Para zerar o banco e recriar do zero:
 ```bash
 make wipe && make migrate && make seed-master && make seed-categorias-anexo
 ```
+# PostgreSQL compartilhado no Ubuntu
+
+A aplicação usa a conexão privada da `.env`: `DB_HOST=postgres-compartilhado`, `DB_PORT=5432`, `DB_DATABASE=rastro`, `DB_USERNAME=rastro_app` e sua senha exclusiva em `DB_PASSWORD`. Essa conta não é superuser. O PostgreSQL compartilhado está em `~/xxx/infra-postgres` e precisa estar disponível antes de iniciar a aplicação.
+
+O serviço `db` foi preservado no profile `legacy-postgres`, com o usuário original `postgres` e a senha original em `LEGACY_POSTGRES_PASSWORD`. Container e volume antigos permanecem existentes e parados; a aplicação depende somente do Redis no Compose. Não remova os recursos antigos nem retorne à origem sem reconciliar escritas do destino. As instruções abaixo de banco por projeto são legadas para este servidor.
